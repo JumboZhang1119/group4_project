@@ -4,7 +4,7 @@ import random
 
 pygame.init()
 
-WIDTH, HEIGHT = 1400, 600
+WIDTH, HEIGHT = 1471, 726
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Plant vs Zombies")
 clock = pygame.time.Clock()
@@ -12,12 +12,17 @@ clock = pygame.time.Clock()
 background = pygame.image.load("background.png")
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 
-GREEN = (0, 200, 0)
+GREEN = (0, 200, 100)
 BROWN = (139, 69, 19)
 RED = (255, 0, 0)
 
+GAME_SPEED = 5 # 1-5
+
 # Position array
-zombie_positions_y = [105, 200, 310, 395, 490]
+zombie_positions_y = [130, 245, 370, 480, 600]
+
+# Speed array
+game_speed = [0, 1500, 1200, 1000, 700, 500]
 
 class Plant(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -65,7 +70,7 @@ plants = pygame.sprite.Group()
 zombies = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 
-spawn_timer = 0
+spawn_timer = 750
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -74,16 +79,17 @@ while True:
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             x, y = event.pos
-            plant = Plant(x - x % 50, y - y % 50)
+            # plant = Plant(x - x % 50, y - y % 50)
+            plant = Plant(350, 130)
             plants.add(plant)
 
     spawn_timer += 1
-    if spawn_timer > 120:
+    if spawn_timer > game_speed[GAME_SPEED]:
         zombie_x = WIDTH+5
         zombie_y = zombie_positions_y[random.randint(0, 4)]
         zombie = Zombie(zombie_x, zombie_y)
         zombies.add(zombie)
-        spawn_timer = 0
+        spawn_timer = random.randint(0, game_speed[GAME_SPEED]-100)
 
     plants.update()
     zombies.update()
