@@ -1,9 +1,10 @@
 import pygame
 import sys
+import random
 
 pygame.init()
 
-WIDTH, HEIGHT = 1920/2, 1080/2
+WIDTH, HEIGHT = 1400, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Plant vs Zombies")
 clock = pygame.time.Clock()
@@ -14,6 +15,9 @@ background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 GREEN = (0, 200, 0)
 BROWN = (139, 69, 19)
 RED = (255, 0, 0)
+
+# Position array
+zombie_positions_y = [105, 200, 310, 395, 490]
 
 class Plant(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -75,7 +79,9 @@ while True:
 
     spawn_timer += 1
     if spawn_timer > 120:
-        zombie = Zombie(WIDTH, 100)
+        zombie_x = WIDTH+5
+        zombie_y = zombie_positions_y[random.randint(0, 4)]
+        zombie = Zombie(zombie_x, zombie_y)
         zombies.add(zombie)
         spawn_timer = 0
 
