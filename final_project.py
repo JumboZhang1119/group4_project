@@ -20,6 +20,7 @@ GAME_SPEED = 5 # 1-5
 
 # Position array
 zombie_positions_y = [130, 245, 370, 480, 600]
+plants_positions_x = [340, 430, 525, 625, 725, 825, 915, 1010, 1110]
 
 # Speed array
 game_speed = [0, 1500, 1200, 1000, 700, 500]
@@ -79,9 +80,11 @@ while True:
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             x, y = event.pos
-            # plant = Plant(x - x % 50, y - y % 50)
-            plant = Plant(350, 130)
-            plants.add(plant)
+            nearest_x = min(plants_positions_x, key=lambda px: abs(px - x))
+            nearest_y = min(zombie_positions_y, key=lambda py: abs(py - y))
+            if abs(nearest_x - x) < 40 and abs(nearest_y - y) < 40:
+                plant = Plant(nearest_x, nearest_y)
+                plants.add(plant)
 
     spawn_timer += 1
     if spawn_timer > game_speed[GAME_SPEED]:
