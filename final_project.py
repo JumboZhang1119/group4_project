@@ -8,6 +8,9 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Plant vs Zombies")
 clock = pygame.time.Clock()
 
+background = pygame.image.load("background.png")
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+
 GREEN = (0, 200, 0)
 BROWN = (139, 69, 19)
 RED = (255, 0, 0)
@@ -85,7 +88,8 @@ while True:
         if hit_zombies:
             bullet.kill()
 
-    screen.fill((30, 30, 30))
+    # screen.fill((30, 30, 30))
+    screen.blit(background, (0, 0))
     plants.draw(screen)
     zombies.draw(screen)
     bullets.draw(screen)
